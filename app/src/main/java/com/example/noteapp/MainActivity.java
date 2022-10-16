@@ -153,20 +153,20 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
                 notes.clear();
                 notes.addAll(database.mainDAO().getAll());
                 notesListAdapter.notifyDataSetChanged();
-                finish();
-                overridePendingTransition(0, 0);
-                startActivity(getIntent());
-                overridePendingTransition(0, 0);
+                //finish();
+                //overridePendingTransition(0, 0);
+                //startActivity(getIntent());
+                //overridePendingTransition(0, 0);
                 return true;
 
             case R.id.poista:
                 database.mainDAO().delete(valittuNote);
                 notes.remove(valittuNote);
                 notesListAdapter.notifyDataSetChanged();
-                finish();
-                overridePendingTransition(0, 0);
-                startActivity(getIntent());
-                overridePendingTransition(0, 0);
+                //finish();
+                //overridePendingTransition(0, 0);
+                //startActivity(getIntent());
+                //overridePendingTransition(0, 0);
                 Toast.makeText(MainActivity.this, "Poistettu", Toast.LENGTH_SHORT).show();
                 return true;
             default:
