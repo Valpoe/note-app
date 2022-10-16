@@ -157,6 +157,7 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
                 //overridePendingTransition(0, 0);
                 //startActivity(getIntent());
                 //overridePendingTransition(0, 0);
+                //testi
                 return true;
 
             case R.id.poista:
