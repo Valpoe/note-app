@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.res.ColorStateList;
@@ -45,7 +46,6 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
         //hello - master push test
         //hello 2 - master push test 2
         setContentView(R.layout.activity_main);
-
         recyclerView = findViewById(R.id.recycler_home);
         fab_add = findViewById(R.id.fab_add);
         searchView_home = findViewById(R.id.searchView_home);
@@ -60,11 +60,20 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
 
         updateRecycler(notes);
 
+        // Värit int muotoon
+        int lightgreyColorValue = Color.parseColor("#D7D3DA");
+        int lightblueColorValue = Color.parseColor("#99DCFF");
+
+        // Apin avautuessa väri lightgrey
+        fab_add.setBackgroundTintList(ColorStateList.valueOf(lightgreyColorValue));
+
         buttonDark.setOnClickListener(new View.OnClickListener() {
+            @SuppressLint("ResourceAsColor")
             @Override
             public void onClick(View view) {
                 relativeLayout.setBackgroundResource(R.color.black);
                 searchView_home.setBackgroundResource(R.color.lightgrey);
+                fab_add.setBackgroundTintList(ColorStateList.valueOf(lightgreyColorValue));
             }
         });
 
@@ -73,6 +82,7 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
             public void onClick(View view) {
                 relativeLayout.setBackgroundResource(R.color.white);
                 searchView_home.setBackgroundResource(R.color.lightblue);
+                fab_add.setBackgroundTintList(ColorStateList.valueOf(lightblueColorValue));
             }
         });
 
