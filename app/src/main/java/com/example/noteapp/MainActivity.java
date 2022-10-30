@@ -11,9 +11,14 @@ import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.res.ColorStateList;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.widget.Button;
 import android.view.View;
+import android.widget.RelativeLayout;
+import android.widget.Switch;
 import android.widget.Toast;
 
 import com.example.noteapp.Adapters.NotesListAdapter;
@@ -37,16 +42,39 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //hello - master push test
+        //hello 2 - master push test 2
         setContentView(R.layout.activity_main);
 
         recyclerView = findViewById(R.id.recycler_home);
         fab_add = findViewById(R.id.fab_add);
         searchView_home = findViewById(R.id.searchView_home);
+        Button buttonDark, buttonLight;
+        buttonDark = findViewById(R.id.buttonDark);
+        buttonLight = findViewById(R.id.buttonLight);
+        final RelativeLayout relativeLayout;
+        relativeLayout = findViewById(R.id.rl1);
 
         database = RoomDB.getInstance(this);
         notes = database.mainDAO().getAll();
 
         updateRecycler(notes);
+
+        buttonDark.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                relativeLayout.setBackgroundResource(R.color.black);
+                searchView_home.setBackgroundResource(R.color.lightgrey);
+            }
+        });
+
+        buttonLight.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                relativeLayout.setBackgroundResource(R.color.white);
+                searchView_home.setBackgroundResource(R.color.lightblue);
+            }
+        });
 
         fab_add.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -136,6 +164,7 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
         popupMenu.inflate(R.menu.popup_menu);
         popupMenu.show();
     }
+
 
     @Override
     public boolean onMenuItemClick(MenuItem item) {

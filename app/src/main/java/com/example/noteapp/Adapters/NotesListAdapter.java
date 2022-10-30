@@ -1,6 +1,7 @@
 package com.example.noteapp.Adapters;
 
 import android.content.Context;
+import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -15,7 +17,9 @@ import com.example.noteapp.Models.Notes;
 import com.example.noteapp.NotesClickListener;
 import com.example.noteapp.R;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class NotesListAdapter extends RecyclerView.Adapter<NotesViewHolder> {
     Context context;
@@ -34,6 +38,7 @@ public class NotesListAdapter extends RecyclerView.Adapter<NotesViewHolder> {
         return new NotesViewHolder(LayoutInflater.from(context).inflate(R.layout.notes_list, parent, false));
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     public void onBindViewHolder(@NonNull NotesViewHolder holder, int position) {
 
@@ -56,6 +61,9 @@ public class NotesListAdapter extends RecyclerView.Adapter<NotesViewHolder> {
             holder.imageView_pin.setImageResource(0);
         }
 
+        int color_code = getRandomColor();
+        holder.notes_container.setCardBackgroundColor(holder.itemView.getResources().getColor(color_code,null));
+
         holder.notes_container.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -70,6 +78,20 @@ public class NotesListAdapter extends RecyclerView.Adapter<NotesViewHolder> {
                 return true;
             }
         });
+    }
+
+    private int getRandomColor() {
+        List<Integer> colorCode = new ArrayList<>();
+
+        colorCode.add(R.color.lightpink);
+        colorCode.add(R.color.lightorange);
+        colorCode.add(R.color.lightpurple);
+        colorCode.add(R.color.lightgreen);
+
+        Random random = new Random();
+        int random_color = random.nextInt(colorCode.size());
+
+        return colorCode.get(random_color);
     }
 
     @Override
