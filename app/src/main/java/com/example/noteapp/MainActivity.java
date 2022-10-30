@@ -42,6 +42,8 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //hello - master push test
+        //hello 2 - master push test 2
         setContentView(R.layout.activity_main);
 
         recyclerView = findViewById(R.id.recycler_home);
