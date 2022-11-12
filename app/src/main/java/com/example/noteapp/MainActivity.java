@@ -8,24 +8,18 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
-
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
-
 import com.example.noteapp.Adapters.NotesListAdapter;
 import com.example.noteapp.Database.RoomDB;
 import com.example.noteapp.Models.Notes;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
-
-//testi
 
 public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuItemClickListener {
     RecyclerView recyclerView;
