@@ -24,7 +24,7 @@ public class NotesTakerActivity extends AppCompatActivity {
     Notes notes;
     boolean poistaNote = false;
 
-    String[] permissions = new String[] { Manifest.permission.CAMERA };
+    String[] permissions = new String[] { Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE };
     private static final int REQUEST_CODE_PERMISSIONS = 10;
 
     @Override
@@ -86,7 +86,8 @@ public class NotesTakerActivity extends AppCompatActivity {
 
     private boolean allPermissionsGranted() {
         Log.e("NWK", "Permissions");
-        return (ContextCompat.checkSelfPermission(this, permissions[0]) == PackageManager.PERMISSION_GRANTED);
+        return ((ContextCompat.checkSelfPermission(this, permissions[0]) == PackageManager.PERMISSION_GRANTED)
+                        && (ContextCompat.checkSelfPermission(this, permissions[1]) == PackageManager.PERMISSION_GRANTED));
     }
 
     @Override
@@ -94,7 +95,6 @@ public class NotesTakerActivity extends AppCompatActivity {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         Log.e("NWK", "startCamera");
         if (requestCode == REQUEST_CODE_PERMISSIONS) {
-            Log.e("NWK", "this will never be reached");
             if (allPermissionsGranted()) {
                 Log.e("NWK", "Permissions granted");
                 startCamera();
