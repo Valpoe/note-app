@@ -11,8 +11,8 @@ import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.Toast;
 import com.example.noteapp.Adapters.NotesListAdapter;
 import com.example.noteapp.Database.RoomDB;
@@ -44,12 +44,9 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
 
         updateRecycler(notes);
 
-        fab_add.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this, NotesTakerActivity.class);
-                startActivityForResult(intent, 101);
-            }
+        fab_add.setOnClickListener(view -> {
+            Intent intent = new Intent(MainActivity.this, NotesTakerActivity.class);
+            startActivityForResult(intent, 101);
         });
 
         searchView_home.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
@@ -85,15 +82,22 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
             if(resultCode== Activity.RESULT_OK){
                 Notes new_notes = (Notes) data.getSerializableExtra("note");
                 database.mainDAO().insert(new_notes);
+                Log.e("NWK", "new note " + new_notes.getImageUrl());
+                Log.e("NWK", "org size " + notes.size());
                 notes.clear();
                 notes.addAll(database.mainDAO().getAll());
+                Log.e("NWK", "list size " + notes.size());
                 notesListAdapter.notifyDataSetChanged();
+                Log.e("NWK", "size still " + notes.size());
             }
         }
         else if(requestCode==102){
             if (resultCode==Activity.RESULT_OK){
                 Notes new_notes = (Notes) data.getSerializableExtra("note");
-                database.mainDAO().update(new_notes.getID(), new_notes.getOtsikko(), new_notes.getNotes());
+                database.mainDAO().update(new_notes.getID(), new_notes.getOtsikko(), new_notes.getNotes(), new_notes.getImageUrl());
+                Log.e("NWK", "update note " + new_notes.getImageUrl());
+                Notes updatedNote = database.mainDAO().getOne(new_notes.getID());
+                Log.e("NWK", "päivitetty note: " + updatedNote.getImageUrl());
                 notes.clear();
                 notes.addAll(database.mainDAO().getAll());
                 notesListAdapter.notifyDataSetChanged();
@@ -114,13 +118,12 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
         public void onClick(Notes notes) {
             Intent intent = new Intent(MainActivity.this, NotesTakerActivity.class);
             intent.putExtra("poista_note", notes);
+            Log.e("NWK", "onClick " + notes.getImageUrl());
             startActivityForResult(intent, 102);
-
         }
 
         @Override
         public void onLongClick(Notes notes, CardView cardView) {
-            valittuNote = new Notes();
             valittuNote = notes;
             showPopup(cardView);
         }

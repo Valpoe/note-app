@@ -7,7 +7,7 @@
     android:orientation="vertical"
     android:background="@color/black"
     tools:context=".NotesTakerActivity"
-    tools:viewBindingIgnore="true">
+    tools:viewBindingIgnore="true" >
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar_notes"
         android:layout_width="match_parent"
@@ -34,27 +34,35 @@
                 android:src="@drawable/ic_camera" />
             </RelativeLayout>
     </androidx.appcompat.widget.Toolbar>
-    <EditText
-        android:id="@+id/editText_otsikko"
-        android:hint="Otsikko: "
-        android:textColorHint="@color/white"
-        android:padding="8dp"
-        android:textStyle="bold"
-        android:textSize="20sp"
-        android:textColor="@color/white"
-        android:singleLine="true"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
-    <EditText
-        android:id="@+id/editText_notes"
-        android:hint="Lisää note: "
-        android:textColorHint="@color/white"
-        android:padding="8dp"
-        android:textColor="@color/white"
-        android:textSize="18sp"
-        android:textStyle="normal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
-
-
+        android:layout_height="wrap_content" >
+        <LinearLayout
+            android:id="@+id/rootContainer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <EditText
+                android:id="@+id/editText_otsikko"
+                android:hint="Otsikko: "
+                android:textColorHint="@color/white"
+                android:padding="8dp"
+                android:textStyle="bold"
+                android:textSize="20sp"
+                android:textColor="@color/white"
+                android:singleLine="true"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+            <EditText
+                android:id="@+id/editText_notes"
+                android:hint="Lisää note: "
+                android:textColorHint="@color/white"
+                android:padding="8dp"
+                android:textColor="@color/white"
+                android:textSize="18sp"
+                android:textStyle="normal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
+    </ScrollView>
 </LinearLayout>

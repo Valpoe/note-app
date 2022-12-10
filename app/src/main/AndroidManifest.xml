@@ -18,7 +18,8 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.NoteApp"
         tools:targetApi="31">
-        <activity android:name=".CameraActivity" />
+        <activity android:name=".CameraActivity"
+            android:parentActivityName=".NotesTakerActivity" />
         <activity
             android:name=".NotesTakerActivity"
             android:theme="@style/Theme.NoteApp.NoActionBar"

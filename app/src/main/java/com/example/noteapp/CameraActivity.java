@@ -1,6 +1,7 @@
 package com.example.noteapp;
 
 import android.content.ContentValues;
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
@@ -33,9 +34,6 @@ public class CameraActivity extends AppCompatActivity {
     ExecutorService cameraExecutor;
     ListenableFuture<ProcessCameraProvider> cameraProviderFuture;
     private static final String FILENAME_FORMAT = "yyyy-MM-dd-HH-mm-ss-SSS";
-    ProcessCameraProvider cameraProvider;
-    CameraSelector cameraSelector;
-    Preview preview;
     ActivityCameraBinding viewBinding;
 
     @Override
@@ -47,7 +45,6 @@ public class CameraActivity extends AppCompatActivity {
         viewFinder = findViewById(R.id.viewFinder);
 
         cameraExecutor = Executors.newSingleThreadExecutor();
-
         cameraProviderFuture = ProcessCameraProvider.getInstance(this);
 
         cameraProviderFuture.addListener(() -> {
@@ -65,18 +62,15 @@ public class CameraActivity extends AppCompatActivity {
                     // Bind use cases to camera
                     cameraProvider.bindToLifecycle(
                             this, cameraSelector, preview, imageCapture);
-                    Log.e("NWK", "binding");
-
                 } catch(Exception ex) {
-                    Log.e("NWK", "Use case binding failed", ex);
+                    // empty
                 }
             } catch (ExecutionException | InterruptedException e) {
-                Log.e("NWK", "Something went wrong");
+                // empty
             }
         }, ContextCompat.getMainExecutor(this));
 
         viewBinding.takePicture.setOnClickListener(view -> takePhoto());
-        Log.e("NWK", "OnCreate");
     }
 
     @Override
@@ -86,40 +80,37 @@ public class CameraActivity extends AppCompatActivity {
     }
 
     private void takePhoto() {
-        Log.e("NWK", "taking picture");
-
-        if (imageCapture != null) {
-            String name = new SimpleDateFormat(FILENAME_FORMAT, Locale.UK).format(System.currentTimeMillis());
-            String relativeLocation = Environment.DIRECTORY_PICTURES + File.separator + "NoteApp";
-            ContentValues contentValues = new ContentValues();
-            contentValues.put(MediaStore.MediaColumns.DISPLAY_NAME, name);
-            contentValues.put(MediaStore.MediaColumns.MIME_TYPE, "image/jpeg");
-            if (Build.VERSION.SDK_INT > Build.VERSION_CODES.P) {
-                contentValues.put(MediaStore.Images.Media.RELATIVE_PATH, relativeLocation);
-            }
-
-            ImageCapture.OutputFileOptions outputOptions = new ImageCapture
-                    .OutputFileOptions.Builder(getContentResolver(),
-                    MediaStore.Images.Media.EXTERNAL_CONTENT_URI, contentValues)
-                    .build();
-
-            Log.e("NWK", "outputoptions ok, imageCapture.takePicture()");
-            imageCapture.takePicture(outputOptions,
-                    ContextCompat.getMainExecutor(this),
-                    new ImageCapture.OnImageSavedCallback() {
-                        @Override
-                        public void onImageSaved(@NonNull ImageCapture.OutputFileResults outputFileResults) {
-                            Toast.makeText(CameraActivity.this, "Image Saved successfully", Toast.LENGTH_SHORT).show();
-                            Log.e("NWK", "image taken");
-                        }
-
-                        @Override
-                        public void onError(@NonNull ImageCaptureException exception) {
-                            Log.e("NWK", "image NOT TAKEN");
-                        }
-                    });
-        } else {
-            Log.e("NWK", "Image capture is null");
+        String name = new SimpleDateFormat(FILENAME_FORMAT, Locale.UK).format(System.currentTimeMillis());
+        String relativeLocation = Environment.DIRECTORY_PICTURES + File.separator + "NoteApp";
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(MediaStore.MediaColumns.DISPLAY_NAME, name);
+        contentValues.put(MediaStore.MediaColumns.MIME_TYPE, "image/jpeg");
+        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.P) {
+            contentValues.put(MediaStore.Images.Media.RELATIVE_PATH, relativeLocation);
         }
+
+        ImageCapture.OutputFileOptions outputOptions = new ImageCapture
+                .OutputFileOptions.Builder(getContentResolver(),
+                MediaStore.Images.Media.EXTERNAL_CONTENT_URI, contentValues)
+                .build();
+
+        imageCapture.takePicture(outputOptions,
+                ContextCompat.getMainExecutor(this),
+                new ImageCapture.OnImageSavedCallback() {
+                    @Override
+                    public void onImageSaved(@NonNull ImageCapture.OutputFileResults outputFileResults) {
+                        Toast.makeText(CameraActivity.this, "Kuva otettu", Toast.LENGTH_SHORT).show();
+                        Intent returnIntent = new Intent(CameraActivity.this, NotesTakerActivity.class);
+                        returnIntent.putExtra("imageUrl", String.valueOf(outputFileResults.getSavedUri()));
+                        Log.e("NWK", String.valueOf(outputFileResults.getSavedUri()));
+                        setResult(RESULT_OK, returnIntent);
+                        finish();
+                    }
+
+                    @Override
+                    public void onError(@NonNull ImageCaptureException exception) {
+                        // empty
+                    }
+                });
     }
 }
