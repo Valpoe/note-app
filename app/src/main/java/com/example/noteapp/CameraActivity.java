@@ -2,6 +2,8 @@ package com.example.noteapp;
 
 import android.content.ContentValues;
 import android.content.Intent;
+import android.database.Cursor;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
@@ -101,7 +103,10 @@ public class CameraActivity extends AppCompatActivity {
                     public void onImageSaved(@NonNull ImageCapture.OutputFileResults outputFileResults) {
                         Toast.makeText(CameraActivity.this, "Kuva otettu", Toast.LENGTH_SHORT).show();
                         Intent returnIntent = new Intent(CameraActivity.this, NotesTakerActivity.class);
-                        returnIntent.putExtra("imageUrl", String.valueOf(outputFileResults.getSavedUri()));
+                        Uri tempUri = outputFileResults.getSavedUri();
+                        File finalFile = new File(getRealPathFromUri(tempUri));
+                        returnIntent.putExtra("imageUrl", finalFile.getPath());
+                        Log.e("NWK", "path " + finalFile.getPath());
                         Log.e("NWK", String.valueOf(outputFileResults.getSavedUri()));
                         setResult(RESULT_OK, returnIntent);
                         finish();
@@ -112,5 +117,19 @@ public class CameraActivity extends AppCompatActivity {
                         // empty
                     }
                 });
+    }
+
+    String getRealPathFromUri(Uri uri) {
+        String path = "";
+        if (getContentResolver() != null) {
+            Cursor cursor = getContentResolver().query(uri, null, null, null, null);
+            if (cursor != null) {
+                cursor.moveToFirst();
+                int idx = cursor.getColumnIndex(MediaStore.Images.ImageColumns.DATA);
+                path = cursor.getString(idx);
+                cursor.close();
+            }
+        }
+        return path;
     }
 }

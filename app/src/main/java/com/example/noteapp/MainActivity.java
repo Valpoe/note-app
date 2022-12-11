@@ -82,13 +82,11 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
             if(resultCode== Activity.RESULT_OK){
                 Notes new_notes = (Notes) data.getSerializableExtra("note");
                 database.mainDAO().insert(new_notes);
-                Log.e("NWK", "new note " + new_notes.getImageUrl());
-                Log.e("NWK", "org size " + notes.size());
                 notes.clear();
+                Log.e("NWK", "list size " + notesListAdapter.getItemCount());
                 notes.addAll(database.mainDAO().getAll());
-                Log.e("NWK", "list size " + notes.size());
                 notesListAdapter.notifyDataSetChanged();
-                Log.e("NWK", "size still " + notes.size());
+                Log.e("NWK", "list size again " + notesListAdapter.getItemCount());
             }
         }
         else if(requestCode==102){

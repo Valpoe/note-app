@@ -20,6 +20,8 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 import com.example.noteapp.Models.Notes;
+
+import java.io.File;
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -58,8 +60,6 @@ public class NotesTakerActivity extends AppCompatActivity {
             poistaNote = true;
             imageUrl = notes.getImageUrl();
 
-            // lisätään layoutiin kuva jos sellainen löytyy
-            Log.e("NWK", "onCreate " + imageUrl);
             showImage();
         } catch (Exception e) {
             e.printStackTrace();
@@ -135,6 +135,8 @@ public class NotesTakerActivity extends AppCompatActivity {
             builder1.setPositiveButton(
                     "Kyllä",
                     (dialog, id) -> {
+                        LinearLayout linearLayout = findViewById(R.id.rootContainer);
+                        linearLayout.removeViewAt(linearLayout.getChildCount() - 1);
                         notes.setImageUrl("");
                         imageUrl = ""; // vanhan kuvan sijainti pois
                         Intent intent = new Intent(this, CameraActivity.class);
@@ -173,16 +175,28 @@ public class NotesTakerActivity extends AppCompatActivity {
 
     void showImage() {
         if (hasImage()) {
-            final ImageView imageView = new ImageView(this);
-            imageView.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
-            imageView.setImageURI(Uri.parse(imageUrl));
+            if (fileExist()) {
 
-            LinearLayout linearLayout = findViewById(R.id.rootContainer);
-            linearLayout.addView(imageView);
+                ImageView imageView = new ImageView(this);
+                imageView.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+                imageView.setImageURI(Uri.parse(imageUrl));
+
+                LinearLayout linearLayout = findViewById(R.id.rootContainer);
+                linearLayout.addView(imageView);
+            } else {
+                imageUrl = "";
+            }
         }
     }
 
     boolean hasImage() {
         return !Objects.equals(imageUrl, "");
+    }
+
+    boolean fileExist() {
+        Log.e("NWK", "File exists " + imageUrl);
+        File file = new File(imageUrl);
+        Log.e("NWK", "is true " + file.exists());
+        return file.exists();
     }
 }
