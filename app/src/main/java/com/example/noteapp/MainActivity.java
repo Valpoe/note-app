@@ -8,6 +8,8 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
+
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.res.ColorStateList;
@@ -57,8 +59,9 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
         updateRecycler(notes);
 
         fab_add.setOnClickListener(view -> {
-            Intent intent = new Intent(MainActivity.this, NotesTakerActivity.class);
-            startActivityForResult(intent, 101);
+                    Intent intent = new Intent(MainActivity.this, NotesTakerActivity.class);
+                    startActivityForResult(intent, 101);
+               });
             
         // Värit int muotoon
         int lightgreyColorValue = Color.parseColor("#D7D3DA");
