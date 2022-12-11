@@ -20,9 +20,12 @@ public interface MainDAO {
     @Query("SELECT * FROM notes ORDER BY id DESC")
     List<Notes> getAll();
 
+    @Query("SELECT * FROM notes WHERE ID = :id")
+    Notes getOne(int id);
+
     // Päivittää noten ID:n perusteella
-    @Query("UPDATE notes SET otsikko = :otsikko, notes = :notes WHERE ID = :id")
-    void update(int id, String otsikko, String notes);
+    @Query("UPDATE notes SET otsikko = :otsikko, notes = :notes, imageUrl = :imageUrl WHERE ID = :id")
+    void update(int id, String otsikko, String notes, String imageUrl);
 
     // Poistaa noten
     @Delete

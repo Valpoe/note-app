@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/black"
+    tools:viewBindingIgnore="true" 
     android:orientation="vertical"
     tools:context=".NotesTakerActivity">
 
@@ -23,33 +24,50 @@
                 android:layout_height="?attr/actionBarSize"
                 android:layout_alignParentEnd="true"
                 android:background="@android:color/transparent"
+                android:layout_width="?attr/actionBarSize"
+                android:layout_height="?attr/actionBarSize"
                 android:padding="8dp"
                 android:src="@drawable/ic_tallenna" />
-        </RelativeLayout>
+
+            <ImageView
+                android:id="@+id/imageView_camera"
+                android:layout_width="?attr/actionBarSize"
+                android:layout_height="?attr/actionBarSize"
+                android:layout_toStartOf="@+id/imageView_tallenna"
+                android:background="@android:color/transparent"
+                android:padding="8dp"
+                android:src="@drawable/ic_camera" />
+            </RelativeLayout>
     </androidx.appcompat.widget.Toolbar>
-
-    <EditText
-        android:id="@+id/editText_otsikko"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Otsikko: "
-        android:padding="8dp"
-        android:singleLine="true"
-        android:textColor="@color/white"
-        android:textColorHint="@color/white"
-        android:textSize="20sp"
-        android:textStyle="bold" />
-
-    <EditText
-        android:id="@+id/editText_notes"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Lisää note: "
-        android:padding="8dp"
-        android:textColor="@color/white"
-        android:textColorHint="@color/white"
-        android:textSize="18sp"
-        android:textStyle="normal" />
-
-
+        android:layout_height="wrap_content" >
+        <LinearLayout
+            android:id="@+id/rootContainer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <EditText
+                android:id="@+id/editText_otsikko"
+                android:hint="Otsikko: "
+                android:textColorHint="@color/white"
+                android:padding="8dp"
+                android:textStyle="bold"
+                android:textSize="20sp"
+                android:textColor="@color/white"
+                android:singleLine="true"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+            <EditText
+                android:id="@+id/editText_notes"
+                android:hint="Lisää note: "
+                android:textColorHint="@color/white"
+                android:padding="8dp"
+                android:textColor="@color/white"
+                android:textSize="18sp"
+                android:textStyle="normal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
+    </ScrollView>
 </LinearLayout>

@@ -8,28 +8,24 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
-
-import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.widget.Button;
 import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.Switch;
 import android.widget.Toast;
-
 import com.example.noteapp.Adapters.NotesListAdapter;
 import com.example.noteapp.Database.RoomDB;
 import com.example.noteapp.Models.Notes;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuItemClickListener {
     RecyclerView recyclerView;
@@ -60,6 +56,10 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
 
         updateRecycler(notes);
 
+        fab_add.setOnClickListener(view -> {
+            Intent intent = new Intent(MainActivity.this, NotesTakerActivity.class);
+            startActivityForResult(intent, 101);
+            
         // Värit int muotoon
         int lightgreyColorValue = Color.parseColor("#D7D3DA");
         int lightblueColorValue = Color.parseColor("#99DCFF");
@@ -128,14 +128,19 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
                 Notes new_notes = (Notes) data.getSerializableExtra("note");
                 database.mainDAO().insert(new_notes);
                 notes.clear();
+                Log.e("NWK", "list size " + notesListAdapter.getItemCount());
                 notes.addAll(database.mainDAO().getAll());
                 notesListAdapter.notifyDataSetChanged();
+                Log.e("NWK", "list size again " + notesListAdapter.getItemCount());
             }
         }
         else if(requestCode==102){
             if (resultCode==Activity.RESULT_OK){
                 Notes new_notes = (Notes) data.getSerializableExtra("note");
-                database.mainDAO().update(new_notes.getID(), new_notes.getOtsikko(), new_notes.getNotes());
+                database.mainDAO().update(new_notes.getID(), new_notes.getOtsikko(), new_notes.getNotes(), new_notes.getImageUrl());
+                Log.e("NWK", "update note " + new_notes.getImageUrl());
+                Notes updatedNote = database.mainDAO().getOne(new_notes.getID());
+                Log.e("NWK", "päivitetty note: " + updatedNote.getImageUrl());
                 notes.clear();
                 notes.addAll(database.mainDAO().getAll());
                 notesListAdapter.notifyDataSetChanged();
@@ -156,13 +161,12 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
         public void onClick(Notes notes) {
             Intent intent = new Intent(MainActivity.this, NotesTakerActivity.class);
             intent.putExtra("poista_note", notes);
+            Log.e("NWK", "onClick " + notes.getImageUrl());
             startActivityForResult(intent, 102);
-
         }
 
         @Override
         public void onLongClick(Notes notes, CardView cardView) {
-            valittuNote = new Notes();
             valittuNote = notes;
             showPopup(cardView);
         }
