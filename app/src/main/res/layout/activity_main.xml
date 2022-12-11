@@ -2,38 +2,69 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/rl1"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:background="@color/black"
-    tools:context=".MainActivity"
-    tools:viewBindingIgnore="true">
+    tools:viewBindingIgnore="true"
+    android:orientation="vertical"
+    tools:context=".MainActivity">
 
     <androidx.appcompat.widget.SearchView
         android:id="@+id/searchView_home"
-        android:layout_alignParentTop="true"
-        android:layout_margin="16dp"
-        android:background="@color/white"
-        app:queryHint="Etsi noteja..."
-        app:iconifiedByDefault="false"
         android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"/>
+        android:layout_height="?attr/actionBarSize"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="23dp"
+        android:layout_marginBottom="16dp"
+        android:background="#D7D3DA"
+        android:baselineAligned="false"
+        app:iconifiedByDefault="false"
+        app:queryHint="Etsi noteja...">
+
+    </androidx.appcompat.widget.SearchView>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_home"
-        android:layout_margin="8dp"
-        android:layout_below="@+id/searchView_home"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent"
+        android:layout_below="@+id/searchView_home"
+        android:layout_marginTop="24dp"
+        android:layout_marginBottom="8dp">
+
+    </androidx.recyclerview.widget.RecyclerView>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab_add"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="true"
-        android:layout_margin="24dp"
-        android:backgroundTint="@color/white"
-        android:src="@drawable/ic_add"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginBottom="24dp"
+        android:src="@drawable/ic_add" />
+
+    <Button
+        android:id="@+id/buttonDark"
+        android:layout_width="82dp"
+        android:layout_height="37dp"
+        android:layout_marginStart="11dp"
+        android:layout_marginTop="81dp"
+        android:layout_marginBottom="613dp"
+        android:backgroundTint="#292729"
+        android:text="Dark" />
+
+    <Button
+        android:id="@+id/buttonLight"
+        android:layout_width="82dp"
+        android:layout_height="37dp"
+        android:layout_marginStart="100dp"
+        android:layout_marginTop="81dp"
+        android:layout_marginBottom="613dp"
+        android:backgroundTint="#ECE3E3"
+        android:text="Light"
+        android:textColor="#000000" />
 
 </RelativeLayout>

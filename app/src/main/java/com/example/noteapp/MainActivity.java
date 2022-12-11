@@ -10,9 +10,15 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 import android.app.Activity;
 import android.content.Intent;
+import android.content.res.ColorStateList;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
+import android.widget.Button;
+import android.view.View;
+import android.widget.RelativeLayout;
+import android.widget.Switch;
 import android.widget.Toast;
 import com.example.noteapp.Adapters.NotesListAdapter;
 import com.example.noteapp.Database.RoomDB;
@@ -33,11 +39,17 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //hello - master push test
+        //hello 2 - master push test 2
         setContentView(R.layout.activity_main);
-
         recyclerView = findViewById(R.id.recycler_home);
         fab_add = findViewById(R.id.fab_add);
         searchView_home = findViewById(R.id.searchView_home);
+        Button buttonDark, buttonLight;
+        buttonDark = findViewById(R.id.buttonDark);
+        buttonLight = findViewById(R.id.buttonLight);
+        final RelativeLayout relativeLayout;
+        relativeLayout = findViewById(R.id.rl1);
 
         database = RoomDB.getInstance(this);
         notes = database.mainDAO().getAll();
@@ -47,6 +59,39 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
         fab_add.setOnClickListener(view -> {
             Intent intent = new Intent(MainActivity.this, NotesTakerActivity.class);
             startActivityForResult(intent, 101);
+            
+        // Värit int muotoon
+        int lightgreyColorValue = Color.parseColor("#D7D3DA");
+        int lightblueColorValue = Color.parseColor("#99DCFF");
+
+        // Apin avautuessa väri lightgrey
+        fab_add.setBackgroundTintList(ColorStateList.valueOf(lightgreyColorValue));
+
+        buttonDark.setOnClickListener(new View.OnClickListener() {
+            @SuppressLint("ResourceAsColor")
+            @Override
+            public void onClick(View view) {
+                relativeLayout.setBackgroundResource(R.color.black);
+                searchView_home.setBackgroundResource(R.color.lightgrey);
+                fab_add.setBackgroundTintList(ColorStateList.valueOf(lightgreyColorValue));
+            }
+        });
+
+        buttonLight.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                relativeLayout.setBackgroundResource(R.color.white);
+                searchView_home.setBackgroundResource(R.color.lightblue);
+                fab_add.setBackgroundTintList(ColorStateList.valueOf(lightblueColorValue));
+            }
+        });
+
+        fab_add.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, NotesTakerActivity.class);
+                startActivityForResult(intent, 101);
+            }
         });
 
         searchView_home.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
@@ -134,6 +179,7 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
         popupMenu.show();
     }
 
+
     @Override
     public boolean onMenuItemClick(MenuItem item) {
         switch (item.getItemId()){
@@ -154,6 +200,7 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
                 //overridePendingTransition(0, 0);
                 //startActivity(getIntent());
                 //overridePendingTransition(0, 0);
+                //testi
                 return true;
 
             case R.id.poista:
@@ -164,6 +211,7 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
                 //overridePendingTransition(0, 0);
                 //startActivity(getIntent());
                 //overridePendingTransition(0, 0);
+                // testi
                 Toast.makeText(MainActivity.this, "Poistettu", Toast.LENGTH_SHORT).show();
                 return true;
             default:

@@ -4,25 +4,30 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:background="@color/black"
-    tools:context=".NotesTakerActivity"
-    tools:viewBindingIgnore="true" >
+    tools:viewBindingIgnore="true" 
+    android:orientation="vertical"
+    tools:context=".NotesTakerActivity">
+
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar_notes"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize">
+
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
+
             <ImageView
                 android:id="@+id/imageView_tallenna"
+                android:layout_width="?attr/actionBarSize"
+                android:layout_height="?attr/actionBarSize"
                 android:layout_alignParentEnd="true"
-                android:src="@drawable/ic_tallenna"
-                android:padding="8dp"
                 android:background="@android:color/transparent"
                 android:layout_width="?attr/actionBarSize"
-                android:layout_height="?attr/actionBarSize"/>
+                android:layout_height="?attr/actionBarSize"
+                android:padding="8dp"
+                android:src="@drawable/ic_tallenna" />
 
             <ImageView
                 android:id="@+id/imageView_camera"
