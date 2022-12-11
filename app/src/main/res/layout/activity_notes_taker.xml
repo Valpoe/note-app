@@ -20,8 +20,6 @@
 
             <ImageView
                 android:id="@+id/imageView_tallenna"
-                android:layout_width="?attr/actionBarSize"
-                android:layout_height="?attr/actionBarSize"
                 android:layout_alignParentEnd="true"
                 android:background="@android:color/transparent"
                 android:layout_width="?attr/actionBarSize"
