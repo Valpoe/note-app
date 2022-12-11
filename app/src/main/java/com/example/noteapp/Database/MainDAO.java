@@ -17,7 +17,7 @@ public interface MainDAO {
     void insert(Notes notes);
 
     // Listaa kaikki notet
-    @Query("SELECT * FROM notes ORDER BY id DESC")
+    @Query("SELECT * FROM notes ORDER BY pinned DESC")
     List<Notes> getAll();
 
     @Query("SELECT * FROM notes WHERE ID = :id")
